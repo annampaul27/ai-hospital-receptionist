@@ -2,21 +2,47 @@
 
 A production-ready full-stack hospital receptionist assistant built with React + Vite + Tailwind, FastAPI, LangGraph, Supabase, and webhook integration to relay.app.
 
-## Features
+## 🚀 Features
 
-- Natural language chat interface with step-by-step patient data collection
-- Name, age, and symptom capture with validation
-- Rule-based and AI-enhanced ward classification
-- Supabase persistence with UUID records and timestamp
-- Secure webhook trigger to `https://relay.app` after completion
-- Docker-ready backend and frontend
+- 💬 **Natural language chat interface** with step-by-step patient data collection
+- 👤 **Smart validation** for name, age, and symptoms
+- 🏥 **AI-enhanced ward classification** with 6 specialized wards:
+  - Emergency Ward (life-threatening conditions)
+  - Mental Health Ward (psychological care)
+  - Cardiology Ward (heart conditions)
+  - Orthopedics Ward (bone/joint issues)
+  - Pediatrics Ward (children's care)
+  - General Ward (other conditions)
+- 🗄️ **Supabase persistence** with UUID records and timestamps
+- 🔗 **Secure webhook integration** to relay.app after completion
+- 🐳 **Docker-ready** for easy deployment
+- 🔒 **API authentication** and CORS protection
 
-## Project Structure
+## 🏗️ Tech Stack
 
-- `frontend/` — React + Vite UI
-- `backend/` — FastAPI backend, LangGraph workflow, Supabase and webhook services
-- `docker-compose.yml` — optional local deployment
-- `.gitignore` — ignored files
+- **Frontend**: React 18 + Vite + Tailwind CSS
+- **Backend**: FastAPI + Python 3.10 + Uvicorn
+- **AI Workflow**: LangGraph for conversational state management
+- **Database**: Supabase (PostgreSQL)
+- **Deployment**: Docker + docker-compose
+- **Webhook**: HTTP POST to relay.app
+
+## 📁 Project Structure
+
+```
+├── frontend/          # React + Vite UI
+├── backend/           # FastAPI backend
+│   ├── app/
+│   │   ├── main.py           # FastAPI app
+│   │   ├── config.py         # Environment config
+│   │   ├── schemas.py        # Pydantic models
+│   │   ├── services/         # Business logic
+│   │   └── routers/          # API endpoints
+│   ├── requirements.txt      # Python dependencies
+│   └── Dockerfile
+├── docker-compose.yml # Local deployment
+└── README.md
+```
 
 ## Setup
 
@@ -98,8 +124,93 @@ Build and run with Docker Compose:
 docker compose up --build
 ```
 
-## Notes
+## 🚀 Deployment
 
-- The backend uses environment variables and secure API key validation.
-- The LangGraph workflow modularizes the conversation flow into input processing, classification, clarification, completion, and webhook trigger.
-- The frontend UI includes message bubbles, typing state, summary card, and responsive layout.
+### Docker (Recommended)
+
+```bash
+# Build and run with docker-compose
+docker-compose up --build
+```
+
+### Cloud Platforms
+
+- **Railway**: Connect GitHub repo, auto-detects Docker
+- **Render**: Web services from Docker  
+- **Vercel + Railway**: Frontend on Vercel, backend on Railway
+
+Set these environment variables in your hosting platform:
+
+```env
+SUPABASE_URL=https://your-prod-project.supabase.co
+SUPABASE_KEY=your-prod-service-role-key
+RELAY_APP_URL=https://relay.app
+API_KEY=secure-random-api-key
+```
+
+## 📡 API Documentation
+
+### POST `/chat`
+
+Chat endpoint for patient registration conversation.
+
+**Headers:**
+```
+X-API-Key: your-api-key
+Content-Type: application/json
+```
+
+**Request:**
+```json
+{
+  "user_message": "John Doe",
+  "session_state": {
+    "patient_name": null,
+    "patient_age": null,
+    "patient_query": null,
+    "ward": null,
+    "completed": false
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "assistant_message": "Thanks John. What is your age?",
+  "session_state": {
+    "patient_name": "John Doe",
+    "patient_age": null,
+    "completed": false
+  },
+  "patient_summary": null
+}
+```
+
+### GET `/`
+
+Health check endpoint.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "message": "Hospital receptionist backend is running."
+}
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+Built with ❤️ for healthcare innovation
