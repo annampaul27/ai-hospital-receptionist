@@ -1,7 +1,11 @@
 import { ApiChatResponse, SessionState } from '../types'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
-const API_KEY = import.meta.env.VITE_API_KEY || 'test-api-key-12345'
+const API_KEY = import.meta.env.VITE_API_KEY
+
+if (!API_KEY) {
+  throw new Error('Missing VITE_API_KEY in frontend environment. This must match the backend API_KEY.')
+}
 
 export async function sendChatMessage(userMessage: string, sessionState: SessionState) {
   const response = await fetch(`${BACKEND_URL}/chat`, {
