@@ -10,9 +10,12 @@ app = FastAPI(
     version='1.0.0',
 )
 
+# Allow frontend hosts to access the API. In hosted deployments, set this to the frontend URL
+# or use ['*'] if the host origin is dynamic. Replace with a tighter policy for production.
 origins = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    '*',
 ]
 
 app.add_middleware(
